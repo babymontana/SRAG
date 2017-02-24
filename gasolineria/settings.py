@@ -80,10 +80,10 @@ WSGI_APPLICATION = 'gasolineria.wsgi.application'
 DATABASES = {
    'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'gasolineria',
-        'USER': 'emmanuelpaez',
-        'PASSWORD': '',
-        'HOST': 'localhost',
+        'NAME': 'heroku_dec49aebe139550',
+        'USER': 'b6cfb78dc2eae4',
+        'PASSWORD': 'b4febe26',
+        'HOST': 'us-cdbr-iron-east-04.cleardb.net',
         'PORT': '3306',
     }
 }
