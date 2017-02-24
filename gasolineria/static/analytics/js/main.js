@@ -1,3 +1,13 @@
+$(document).ready(function(){
+
+	$(".ejemplo").click(function() {
+	    var val = $(this).attr("rel");
+	    $.featherlight($("#"+val));
+	    
+	});
+	
+});
+
 ;(function () {
 	
 	'use strict';
@@ -265,3 +275,4 @@
 
 
 }());
+
