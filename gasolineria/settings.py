@@ -83,7 +83,7 @@ DATABASES = {
         'NAME': 'heroku_dec49aebe139550',
         'USER': 'b6cfb78dc2eae4',
         'PASSWORD': 'b4febe26',
-        'HOST': 'us-cdbr-iron-east-04.cleardb.net?reconnect=true',
+        'HOST': 'us-cdbr-iron-east-04.cleardb.net',
         'PORT': '3306',
     }
 }
