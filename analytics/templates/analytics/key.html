@@ -1,0 +1,195 @@
+{% load static %}
+<!DOCTYPE HTML>
+<html>
+	<head>
+	<meta charset="utf-8">
+	<title>SRAG Analytics</title>
+	
+
+	<!-- Animate.css -->
+	<link rel="stylesheet" type="text/css" href="{% static 'analytics/css/animate.css' %}" >
+	<!-- Icomoon Icon Fonts-->
+	<link rel="stylesheet" type="text/css" href="{% static 'analytics/css/icomoon.css' %}" >
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" type="text/css" href="{% static 'analytics/css/bootstrap.css' %}" >
+
+	<!-- Magnific Popup -->
+	<link rel="stylesheet" type="text/css" href="{% static 'analytics/css/magnific-popup.css' %}" >
+
+	<!-- Flexslider  -->
+	<link rel="stylesheet" type="text/css" href="{% static 'analytics/css/flexslider.css' %}" >
+
+	<!-- Theme style  -->
+	<link rel="stylesheet" type="text/css" href="{% static 'analytics/css/style.css' %}" >
+
+	<!-- Modernizr JS -->
+	<script src="{% static 'analytics/js/modernizr-2.6.2.min.js ' %}"></script>
+	<!-- FOR IE9 below -->
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body>
+		
+	<div class="fh5co-loader"></div>
+	
+	<div id="page">
+	<nav class="fh5co-nav" role="navigation">
+		<div class="top-menu">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-xs-2">
+						<div id="fh5co-logo"><a href="/">SRAG Analytics<span>.</span></a></div>
+					</div>
+					<div class="col-xs-10 text-right menu-1">
+						<ul>
+							<li ><a href="/">Inicio</a></li>
+							<li ><a href="estadistica">Estadisticas</a></li>
+							<li><a href="api">API</a></li>
+							<li class="active"><a href="key"><span>KEY</span></a></li>
+						</ul>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</nav>
+
+	<aside id="fh5co-hero" class="js-fullheight">
+		<div class="flexslider js-fullheight">
+			<ul class="slides">
+		   	<li class="holder" style="background-image: url({% static 'analytics/images/img_bg_6.jpeg' %});">
+		   		<div class="overlay-gradient"></div>
+		   		<div class="container">
+		   			<div class="col-md-10 col-md-offset-1 text-center js-fullheight slider-text">
+		   				<div class="slider-text-inner desc">
+		   					<h2 class="heading-section">KEY</h2>
+		   					
+		   				</div>
+		   			</div>
+		   		</div>
+		   	</li>
+		  	</ul>
+	  	</div>
+	</aside>
+	
+	<div id="fh5co-product">
+		<div class="container">
+			
+			<div class="page-header">
+  				<h1>Conectate <small>Iniciar sesión</small></h1>
+  				
+			</div>
+			<form class="navbar-form navbar-left" method='POST' action="{% url 'developer:login' %}" >
+				{% csrf_token %}
+				<div id="error"></div>
+			  	<div class="form-group">
+			    	
+			    	<input type="text" name="correo" class="form-control" required placeholder="Correo Electrónico">
+			    	<input type="password" name="password" class="form-control" required placeholder="Password"/>
+			  	</div>
+			  	<button type="submit" class="btn btn-primary btn-lgt">Entrar</button>
+			</form>
+			<br/><br/><br/><br/>
+			<div class="page-header">
+  				<h1>Registro <small>Crea tu cuenta</small></h1>
+			</div>
+			<form class="navbar-form navbar-left" method="POST" action="{% url 'developer:register' %}">
+				{% csrf_token %}
+			  	<div class="form-group">
+			    	<input type="text" required name="nombre" class="form-control" placeholder="Nombre Organización"><br/><br/>
+			    	<input type="text" required name="correo" class="form-control" placeholder="Correo Electrónico"><br/><br/>
+			    	<input type="password" required name="password" class="form-control" placeholder="Password"/><br/><br/>
+			    	<input type="password" required name="password2" class="form-control" placeholder="Confirmar password"/><br/><br/>
+			  	</div>
+			  	<br/>
+			  	<button type="submit" class="btn btn-primary btn-lgt">Registrar</button>
+			</form>
+		</div>
+	</div>
+
+	<div id="fh5co-started" style="background-image:url({% static 'analytics/images/img_bg_2.jpg' %});">
+		<div class="overlay"></div>
+		<div class="container">
+			<div class="row animate-box">
+				<div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
+					<h2>Acerca de</h2>
+					<p>SRAG es una iniciativa del Técnologico de Monterrey CCM y elaborado por alumnos de la carrera Ingenieria en Tecnologias Computacionales.</p>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<footer id="fh5co-footer" role="contentinfo">
+		<div class="container">
+			<div class="row row-pb-md">
+				<div class="col-md-4 fh5co-widget">
+					<h4>ITESM CCM</h4>
+					<p>Calle del Puente #222 Col. Ejidos de Huipulco, Tlalpan C.P. 14380, México D.F. </p>
+				</div>
+				<div class="col-md-4 col-md-push-1">
+					<h4>Links</h4>
+					<ul class="fh5co-footer-links">
+						<li><a href="/">Inicio</a></li>
+						<li><a href="estadistica">Estadisticas</a></li>
+						<li><a href="api">API</a></li>
+						<li><a href="key">KEY</a></li>
+					</ul>
+				</div>
+
+				<div class="col-md-4 col-md-push-1">
+					<h4>Información de contacto</h4>
+					<ul class="fh5co-footer-links">
+						<li><a href="mailto:SRAG.analytics@gmail.com">SRAG.analytics@gmail.com</a></li>
+						
+					</ul>
+				</div>
+
+			</div>
+
+			<div class="row copyright">
+				<div class="col-md-12 text-center">
+					<p>
+						<small class="block">&copy; 2017 SRAG. All Rights Reserved.</small> 
+						
+					</p>
+					<p>
+						<ul class="fh5co-social-icons">
+							<li><a href="#"><i class="icon-twitter"></i></a></li>
+							<li><a href="#"><i class="icon-facebook"></i></a></li>
+							<li><a href="#"><i class="icon-linkedin"></i></a></li>
+							<li><a href="#"><i class="icon-dribbble"></i></a></li>
+						</ul>
+					</p>
+				</div>
+			</div>
+
+		</div>
+	</footer>
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
+	</div>
+	
+	<!-- jQuery -->
+	<script src="{% static 'analytics/js/jquery.min.js' %}"></script>
+	<!-- jQuery Easing -->
+	<script src="{% static 'analytics/js/jquery.easing.1.3.js' %}"></script>
+	<!-- Bootstrap -->
+	<script src="{% static 'analytics/js/bootstrap.min.js' %}"></script>
+	<!-- Waypoints -->
+	<script src="{% static 'analytics/js/jquery.waypoints.min.js' %}"></script>
+	<!-- Flexslider -->
+	<script src="{% static 'analytics/js/jquery.flexslider-min.js' %}"></script>
+	<!-- Magnific Popup -->
+	<script src="{% static 'analytics/js/jquery.magnific-popup.min.js' %}"></script>
+	<script src="{% static 'analytics/js/magnific-popup-options.js' %}"></script>
+	<!-- Main -->
+	<script src="{% static 'analytics/js/main.js' %}"></script>
+
+	</body>
+</html>
+
