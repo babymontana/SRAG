@@ -1,4 +1,4 @@
-* Proyecto SRAG
+*Proyecto SRAG
 
  Desarrollado en DJANGO y mySQL
 ** Requisitos
