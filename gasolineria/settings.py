@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'analytics.apps.AnalyticsConfig',
     'developer.apps.DeveloperConfig',
+    'estadistics.apps.EstadisticsConfig',
     'corsheaders',
 ]
 

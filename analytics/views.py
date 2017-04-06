@@ -8,7 +8,10 @@ def index(request):
       return render(request, 'analytics/index.html')
 
 def estadistica(request):
-    return render(request, 'analytics/estadistica.html')
+     if request.session.has_key('user'):
+        return redirect('/estadistics') 
+     else:
+        return render(request, 'analytics/estadistica.html')
     
 def api(request):
     return render(request, 'analytics/api.html')    
