@@ -18,9 +18,28 @@ body {
   color: #828282;
   background: #fff;
 }
+
 .keys{
   width:30%;
+  margin-bottom:200px;
+  display: inline-table;
+  float:left;
 }
+
+#map-chart{
+  display: none; 
+}
+
+.menu{
+  display:none;
+  margin-left:10%;
+  width:50%;
+}
+
+.menu li{
+  cursor:pointer;
+}
+
 #page {
   position: relative;
   overflow-x: hidden;
@@ -1332,7 +1351,5 @@ h1, h2, h3, h4, h5, h6, figure {
 .js .animate-box {
   opacity: 0;
 }
-
-
 
 /*# sourceMappingURL=style.css.map */
