@@ -19,7 +19,12 @@ Es el módulo principal y sirve como front end en el sitio web principal
 
 ## Analytics
 
-Este módulo contiene la funcionalidad para consultar las estadisticas de uso de las llaves (Pendiente Spring 2)
+Este módulo contiene la funcionalidad para consultar las estadisticas de uso de las llaves 
+
+Contiene 3 tipos de estadisticas
+* Numero de consultas por mes
+* Mapa de calor de consultas geograficamente
+* Porcentaje de tipo de gitconsultas
 
 ## Developer
 
