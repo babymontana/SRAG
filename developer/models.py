@@ -16,6 +16,10 @@ class Periodo(models.Model):
     dia = models.CharField(max_length=2)
     mes = models.CharField(max_length=2)
     anio = models.CharField(max_length=4)
+
+class Hora(models.Model):
+    hora = models.CharField(max_length=2)
+    minuto = models.CharField(max_length=2)
     
 class Servicio(models.Model):
     nombre = models.CharField(max_length=200)
@@ -24,6 +28,11 @@ class Llamadas_Consultas(models.Model):
     key = models.ForeignKey(Key, on_delete=models.CASCADE)
     servicio = models.ForeignKey(Servicio, on_delete=models.CASCADE)
     periodo = models.ForeignKey(Periodo, on_delete=models.CASCADE)
+    hora = models.ForeignKey(Hora, on_delete=models.CASCADE)
     latitud = models.CharField(max_length=200)
     longitud = models.CharField(max_length=200)
+    costo_premium = models.CharField(max_length=4)
+    costo_magna = models.CharField(max_length=4)
+    tiempo_minutos =models.CharField(max_length=6) 
+    
 
