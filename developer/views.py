@@ -4,7 +4,7 @@ import json
 import datetime
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
-from .models import User,Key,Servicio,Periodo,Llamadas_Consultas
+from .models import User,Key,Servicio,Periodo,Llamadas_Consultas,Hora
 from Crypto.Cipher import AES
 from django.db import IntegrityError
 from django.utils.crypto import get_random_string
@@ -80,11 +80,9 @@ def estacionesSinCosto(request,key,latitud,longitud):
           key = Key.objects.get(key=key)
           servicio = Servicio.objects.get(nombre='estacionesSinCosto')
           d = datetime.date.today()
+          t = datetime.datetime.now()
           periodo = Periodo.objects.get(dia=d.day,mes=d.month,anio=d.year)
-          #iniciamos objeto tabla de hechos
-          consulta = Llamadas_Consultas(latitud=latitud,longitud=longitud,key=key,periodo=periodo,servicio=servicio)
-          #guardamos en la base de datos
-          consulta.save()
+          hora = Hora.objects.get(hora=t.hour)
      
           #definimos URL pemex
           url = "http://pronosticodemanda.pemex.com//WS_GP/Pemex.Servicios.svc/nearby2/"+latitud+"/"+longitud
@@ -104,7 +102,11 @@ def estacionesSinCosto(request,key,latitud,longitud):
                     'distancia':element['distance']
                })
           envio = {'estatus':'success','gasolineras':datos}
-          #enviamos respuesta http      
+          #enviamos respuesta http   
+          #iniciamos objeto tabla de hechos
+          consulta = Llamadas_Consultas(tiempo_minutos=0,costo_premium=0,costo_magna=0,latitud=latitud,hora=hora,longitud=longitud,key=key,periodo=periodo,servicio=servicio)
+          #guardamos en la base de datos
+          consulta.save()
           return HttpResponse(json.dumps(envio), content_type="application/json")
      except(Key.DoesNotExist):
           #llave no existe enviar error   
@@ -118,11 +120,11 @@ def estacionesConCosto(request, key, latitud, longitud):
           key = Key.objects.get(key=key)
           servicio = Servicio.objects.get(nombre='estacionesConCosto')
           d = datetime.date.today()
+          t = datetime.datetime.now()
           periodo = Periodo.objects.get(dia=d.day,mes=d.month,anio=d.year)
-          #iniciamos objeto tabla de hechos
-          consulta = Llamadas_Consultas(latitud=latitud,longitud=longitud,key=key,periodo=periodo,servicio=servicio)
-          #guardamos en la base de datos
-          consulta.save()
+          hora = Hora.objects.get(hora=t.hour)
+
+
           #definimos URL pemex
           url = "http://pronosticodemanda.pemex.com//WS_GP/Pemex.Servicios.svc/nearby2/"+latitud+"/"+longitud
           #Hacemos peticion y cachamos respuesta               
@@ -148,6 +150,10 @@ def estacionesConCosto(request, key, latitud, longitud):
                     'precios':precios
                })
           envio = {'estatus':'success','gasolineras':datos}
+          #iniciamos objeto tabla de hechos
+          consulta = Llamadas_Consultas(tiempo_minutos=0,costo_premium=precios['Premium'],costo_magna=precios['Magna'],latitud=latitud,hora=hora,longitud=longitud,key=key,periodo=periodo,servicio=servicio)
+          #guardamos en la base de datos
+          consulta.save()
           #enviamos respuesta http      
           return HttpResponse(json.dumps(envio), content_type="application/json")
      except(Key.DoesNotExist):
@@ -162,11 +168,10 @@ def estacionesConsumo(request,key,latitud, longitud, rendimiento):
           key = Key.objects.get(key=key)
           servicio = Servicio.objects.get(nombre='estacionesConsumo')
           d = datetime.date.today()
+          t = datetime.datetime.now()
           periodo = Periodo.objects.get(dia=d.day,mes=d.month,anio=d.year)
-          #iniciamos objeto tabla de hechos
-          consulta = Llamadas_Consultas(latitud=latitud,longitud=longitud,key=key,periodo=periodo,servicio=servicio)
-          #guardamos en la base de datos
-          consulta.save()
+          hora = Hora.objects.get(hora=t.hour)
+
           #definimos URL pemex
           url = "http://pronosticodemanda.pemex.com//WS_GP/Pemex.Servicios.svc/nearby2/"+latitud+"/"+longitud
           #Hacemos peticion y cachamos respuesta               
@@ -212,6 +217,10 @@ def estacionesConsumo(request,key,latitud, longitud, rendimiento):
                     
                })
           envio = {'estatus':'success','gasolineras':datos}
+          #iniciamos objeto tabla de hechos
+          consulta = Llamadas_Consultas(tiempo_minutos=inforuta['duration']['value'],costo_premium=precios['Premium'],costo_magna=precios['Magna'],latitud=latitud,hora=hora,longitud=longitud,key=key,periodo=periodo,servicio=servicio)
+          #guardamos en la base de datos
+          consulta.save()
           #enviamos respuesta http      
           return HttpResponse(json.dumps(envio), content_type="application/json")
      except(Key.DoesNotExist):
