@@ -8,35 +8,16 @@ $(document).ready(function(){
        $("#consultas").addClass("active");
        consultas(id);
        mapa(id);
+       servicios(id);
+       horas(id);
+       precios(id);
+       tiempo(id);
+       consumo(id);
     });
     
  //Ajax numero consultas 
  
- $("#consultas").click(function(){
-    $(".selections").removeClass("active");
-    $("#consultas").addClass("active");
-     consultas(id);
-     $("#chart-container").fadeIn();
-    $("#map-chart").fadeOut();
-     
- });
  
- //Ajax servicios
- $("#servicios").click(function() {
-     $(".selections").removeClass("active");
-    $("#servicios").addClass("active");
-     servicios(id);
-     $("#chart-container").fadeIn();
-    $("#map-chart").fadeOut();
- });
- 
- $("#mapa").click(function() {
-       $(".selections").removeClass("active");
-    $("#mapa").addClass("active");
-    $("#chart-container").fadeOut();
-    $("#map-chart").fadeIn();
-     
- });
     
     function consultas(id){
      var data = {
@@ -77,7 +58,8 @@ $(document).ready(function(){
                 "divLineIsDashed": "1",
                 "showAlternateHGridColor": "0",
                 "subcaptionFontBold": "0",
-                "subcaptionFontSize": "14"
+                "subcaptionFontSize": "14",
+                "theme": "fint"
             },            
             "data":data ,
            
@@ -99,9 +81,9 @@ $(document).ready(function(){
            data: data,
            success: function(response){
             var data =  jQuery.parseJSON(response)
-             var ageGroupChart = new FusionCharts({
+             var ageGroupChart2 = new FusionCharts({
                type: 'pie3d',
-               renderAt: 'chart-container',
+               renderAt: 'chart-servicios',
                width: '450',
                height: '300',
                dataFormat: 'json',
@@ -134,7 +116,8 @@ $(document).ready(function(){
                        "legendBorderAlpha": '0',
                        "legendShadow": '0',
                        "legendItemFontSize": '10',
-                       "legendItemFontColor": '#666666'
+                       "legendItemFontColor": '#666666',
+                       "theme": "fint"
                    },
                    "data": data
                },
@@ -168,5 +151,234 @@ $(document).ready(function(){
      
     }
            
+    function horas(id){
+     var data = {
+        "id":id
+       };
+       
+       $.ajax({
+           type: "POST",
+           url: "horas",
+           data: data,
+           success: function(response){
+            var data =  jQuery.parseJSON(response);
+            var label ="";
+            var datos = "";
+            for (d in data){
+                label+=data[d].label+"|";
+                datos+=data[d].value+"|"
+                
+            }
+            FusionCharts.ready(function () {
+    var visitChart = new FusionCharts({
+        type: 'zoomline',
+        renderAt: 'chart-horas',
+        width: '600',
+        height: '400',
+        dataFormat: 'json',
+        dataSource: {
+            "chart": {
+                "caption": "Visitas por horarios",
+                "subcaption": "Horas criticas",
+                "yaxisname": "Numero de peticiones",
+                "xaxisname": "Horas del dia",
+                "yaxisminValue": "800",                
+                "lineThickness": "1",
+                "compactdatamode" : "1",
+                "dataseparator" : "|",                
+                //Pixel per point
+                "pixelsPerPoint": "40",
+                "theme": "fint"
+            },
+            "categories": [
+                {
+                    "category": label
+                }
+            ],
+            "dataset": [
+                {
+                    "seriesname": "horas",
+                    "data":datos
+                }
+            ]
+        }
+    });
+    visitChart.render();
+});
+            
+           },
+                  });
+    }
     
+    function precios(id){
+     var data = {
+        "id":id
+       };
+       
+       $.ajax({
+           type: "POST",
+           url: "precios",
+           data: data,
+           success: function(response){
+            var data =  jQuery.parseJSON(response);
+            var label =[];
+            var magna = [];
+            var premium = [];
+            for (d in data){
+                label[d]={"label":data[d].label+""};
+                magna[d]={"value":data[d].magna+""};
+                premium[d]={"value":data[d].premium+""};
+                
+            }
+            
+            FusionCharts.ready(function () {
+    var revenueChart = new FusionCharts({
+        type: 'mscombidy2d',
+        renderAt: 'chart-precios',
+        width: '600',
+        height: '350',
+        dataFormat: 'json',
+        dataSource: {
+            "chart": {
+                "caption": "Precio de gasolinas",
+                    "subCaption": "Pemex",
+                    "xAxisname": "Meses",
+                    "pYAxisName": "Precio",
+                    "sYAxisName": "Precio",
+                    "numberPrefix": "$",
+                    "sNumberSuffix" : "$",
+                    "sYAxisMaxValue" : "20",
+                    "numDivLines": "3",                    
+                    "theme": "fint"
+            },
+            "categories": [{
+                "category":label
+            }],
+            "dataset": [{
+                "seriesName": "Magna",
+                    "data": magna,
+                    "renderAs": "line",
+            }, {
+                "seriesName": "Premium",
+                "renderAs": "area",
+                "data": premium
+            }]
+        }
+    });
+
+    revenueChart.render();
+});
+            
+           },
+                  });
+    }
+    
+    function tiempo(id){
+     var data = {
+        "id":id
+       };
+       
+       $.ajax({
+           type: "POST",
+           url: "tiempo",
+           data: data,
+           success: function(response){
+            var data =  jQuery.parseJSON(response);
+            FusionCharts.ready(function () {
+    var salesChart = new FusionCharts({
+        type: 'area2d',
+        renderAt: 'chart-tiempo',
+        width: '600',
+        height: '300',
+        dataFormat: 'json',
+        dataSource: {
+            "chart": {
+                "caption": "Tiempo de traslado  promedio",
+                "subCaption": "Gasolinera más cercana",
+                "xAxisName": "Meses",
+                "yAxisName": "Tiempo",
+                "numberPrefix": "",
+                "theme": "fint",
+                //Setting gradient fill to off.
+            },            
+            "data": data
+        }
+    }).render();
+});
+            
+            
+            
+           },
+                  });
+    }
+    
+    function consumo(id){
+     var data = {
+        "id":id
+       };
+       
+       $.ajax({
+           type: "POST",
+           url: "size",
+           data: data,
+           success: function(response){
+            var data =  jQuery.parseJSON(response);
+             FusionCharts.ready(function () {
+    var revComp = new FusionCharts({
+        type: 'hbullet',
+        renderAt: 'chart-consumo',
+        width: '500',
+        height: '80',
+        dataFormat: 'json',
+        dataSource: {
+            "chart": {
+                "lowerLimit": "0",
+                "upperLimit": "100",
+                "caption": "Consumo de datos",
+                "subcaption": "Promedio Menual",
+                "numberPrefix": "",
+                "numberSuffix": "mb",                
+                "plotFillColor": "#0075c2",                
+                "targetColor": "#8e0000",
+                "showHoverEffect": "1",
+                "showBorder": "0",
+                "bgColor": "#ffffff",
+                "showShadow": "0",
+                "colorRangeFillMix": "{light+0}",                
+                "valuePadding": "7"
+            },
+            "colorRange": {
+                "color": [
+                    {
+                        "minValue": "0",
+                        "maxValue": "50",
+                        "code": "#1aaf5d",
+                        "alpha": "70"
+                    },
+                    {
+                        "minValue": "50",
+                        "maxValue": "75",
+                        "code": "#f2c500",
+                        "alpha": "70"
+                    },
+                    {
+                        "minValue": "75",
+                        "maxValue": "120",
+                        "code": "#e44a00",
+                        "alpha": "70"
+                    }
+                ]
+            },
+            "value": data[0].value,
+            
+        }
+    })
+    .render();
+});
+            
+            
+            
+           },
+                  });
+    }
 });
